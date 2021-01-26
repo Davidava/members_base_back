@@ -1,4 +1,4 @@
-# CRUD operations using Nodejs, Express, Multer, Auth0 Cloudinary and MongoDB
+# CRUD operations using Nodejs, Express, Multer, Auth0, Cloudinary and MongoDB
 
 This project is about performing CRUD (create, read, update, delete) operations on Cloudinary using Nodejs, Express, Multer and MongoDB
 
