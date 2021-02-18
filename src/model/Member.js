@@ -1,3 +1,7 @@
+const mongoosePaginate = require('mongoose-paginate-v2');
+
+const textSearch = require('mongoose-partial-full-search');
+
 const {
     model,
     Schema,
@@ -6,27 +10,33 @@ const {
 const schema = new Schema({
     name: {
         type: String,
-        default: ''
+        default: '',
+        require
     },
     surName: {
         type: String,
-        default: ''
+        default: '',
+        require
     },
     middleName: {
         type: String,
-        default: ''
+        default: '',
+        require
     },
     phoneNumber: {
         type: String,
-        default: ''
+        default: '',
+        require
     },
     membership: {
         type: String,
-        default: ''
+        default: '',
+        require
     },
     dateOfBirth: {
         type: String,
-        default: ''
+        default: '',
+        require
     },
     avatar: {
         type: String,
@@ -37,5 +47,11 @@ const schema = new Schema({
         default: ''
     },
 });
+
+schema.index({ name: 'text', surName: 'text', middleName: 'text' });
+schema.plugin(textSearch)
+
+schema.plugin(mongoosePaginate)
+
 
 module.exports = model("Member",schema)

@@ -1,4 +1,4 @@
-const boom = require('boom')
+const boom = require('boom');
 const cloudinary = require("../utils/cloudinary");
 
 const genericCrud = (model) => ({
@@ -10,10 +10,12 @@ const genericCrud = (model) => ({
             return res.status(400).send(boom.boomify(err))
         }
     },
-    async getAll(_, res) {
+    async getAll({params: { page } }, res) {
         try {
-            const items = await model.find()
-            return res.status(200).send(items)
+            console.log(page)
+            await model.paginate({}, { limit: 10, page: page }).then(function (result) {
+                return res.status(200).send(result)
+            })
     } catch (err) {
         return res.status(400).send(boom.boomify(err))
     }},
@@ -33,6 +35,7 @@ const genericCrud = (model) => ({
     },
     async update(req, res) {
         try {
+            console.log(req.body)
             const member = await model.findById(req.params.id);
             const data = Object.assign({},req.body);
             // Delete and Upload image cloudinary
@@ -62,6 +65,14 @@ const genericCrud = (model) => ({
             return res.status(400).send(boom.boomify(err))
         }
     },
+    async search({params: { text } }, res) {
+        try {
+            items = await model.search(text)
+            return res.status(200).send(items)
+        } catch (err) {
+            return res.status(400).send(boom.boomify(err))
+        }
+    }
 })
 
 module.exports = genericCrud

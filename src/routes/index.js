@@ -1,3 +1,3 @@
 module.exports = {
-    routes: ["members"],
+    routes: ["members", "search", "member"],
 };
